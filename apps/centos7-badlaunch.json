@@ -1,0 +1,32 @@
+{
+  "name": "test-centos7",
+  "version": "0.1",
+  "lifetime": "3600",
+  "configuration": {
+    "properties": {
+      "yarn.service.container-failure.retry.max": 5
+    }
+  },
+  "components" :
+    [
+      {
+        "name": "centos7-nopid",
+        "number_of_containers": 1,
+        "artifact": {
+          "id": "library/centos:7",
+          "type": "DOCKER"
+        },
+        "configuration": {
+          "properties": {
+            "yarn.node.failure.threshold": "1",
+	    "yarn.service.container-failure.retry.max": 1
+          }
+        },
+        "launch_command": "echo workdir >> workdir; cat workdir; sleep 20; /bad_command",
+        "resource": {
+          "cpus": 2,
+          "memory": "1024"
+        }
+      }
+    ]
+}

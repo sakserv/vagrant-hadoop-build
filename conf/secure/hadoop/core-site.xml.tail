@@ -1,0 +1,40 @@
+
+    <property> 
+      <name>hadoop.security.authentication</name> 
+      <value>kerberos</value> 
+    </property>
+
+    <property> 
+      <name>hadoop.security.authorization</name> 
+      <value>true</value> 
+    </property>
+
+    <property>
+      <name>hadoop.security.auth_to_local</name>
+      <value>RULE:[1:$1@$0](.*@EXAMPLE.COM)s/@.*//
+RULE:[2:$1@$0](dn@EXAMPLE.COM)s/.*/hdfs/
+RULE:[2:$1@$0](hbase@EXAMPLE.COM)s/.*/hbase/
+RULE:[2:$1@$0](jhs@EXAMPLE.COM)s/.*/mapred/
+RULE:[2:$1@$0](nm@EXAMPLE.COM)s/.*/yarn/
+RULE:[2:$1@$0](nn@EXAMPLE.COM)s/.*/hdfs/
+RULE:[2:$1@$0](rm@EXAMPLE.COM)s/.*/yarn/
+RULE:[2:$1@$0](yarn@EXAMPLE.COM)s/.*/yarn/
+DEFAULT</value>
+    </property>
+
+    <property>
+      <name>hadoop.proxyuser.yarn.groups</name>
+      <value>*</value>
+    </property>
+
+    <property>
+      <name>hadoop.proxyuser.yarn.hosts</name>
+      <value>*</value>
+    </property>
+
+    <property>
+      <name>hadoop.http.filter.initializers</name>
+      <value>org.apache.hadoop.security.AuthenticationFilterInitializer,org.apache.hadoop.http.lib.StaticUserWebFilter</value>
+    </property>
+    
+</configuration>

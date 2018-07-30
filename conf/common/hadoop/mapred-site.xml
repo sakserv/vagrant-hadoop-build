@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+    
+    <property>
+      <name>mapreduce.job.user.name</name>
+      <value>${user.name}</value>
+    </property>
+    
+    <property>
+      <name>mapreduce.framework.name</name>
+      <value>yarn</value>
+    </property>
+    
+    <property>
+      <name>yarn.apps.stagingDir</name>
+      <value>/user/${user.name}/staging</value>
+    </property>
+
+    <property>
+      <name>mapreduce.job.user.classpath.first</name>
+      <value>true</value>
+    </property>
+
+    <property>
+      <name>mapreduce.application.classpath</name>
+      <value>
+        $HADOOP_YARN_HOME/share/hadoop/mapreduce/*,
+        $HADOOP_YARN_HOME/share/hadoop/mapreduce/lib/*,
+      </value>
+    </property>
+
+</configuration>

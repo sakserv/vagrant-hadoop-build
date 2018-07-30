@@ -1,0 +1,16 @@
+  <configuration>
+
+<property>
+<name>slider.funtest.enabled</name>
+<value>true</value>
+</property>
+<property>
+<name>slider.test.agent.enabled</name>
+<value>true</value>
+</property>
+<property>
+<name>HADOOP_CONF_DIR</name>
+<value>/usr/local/share/hadoop/conf</value>
+</property>
+    
+  </configuration>

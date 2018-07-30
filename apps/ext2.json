@@ -1,0 +1,9 @@
+{
+  "name": "ext-app-2", 
+  "version": "0.1",
+  "lifetime": "3600",
+  "artifact": {
+    "id": "sleep-app-1",
+    "type": "APPLICATION"
+  }
+}

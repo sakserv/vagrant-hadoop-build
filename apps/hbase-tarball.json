@@ -1,0 +1,80 @@
+{
+  "name": "hbase-app-1",
+  "version": "0.1",
+  "lifetime": "3600",
+  "artifact": {
+    "id": "/user/root/hbase-1.1.2.3.0.0.0-214.tar.gz",
+    "type": "TARBALL"
+  },
+  "configuration": {
+    "env": {
+      "HBASE_LOG_DIR": "<LOG_DIR>",
+      "HBASE_CONF_DIR": "$PWD/conf",
+      "HBASE_PID_DIR": "$PWD/pids",
+      "HBASE_MANAGES_ZK": "false",
+      "HBASE_MASTER_OPTS": "-Xmx2048m -Xms1024m",
+      "HBASE_REGIONSERVER_OPTS": "-XX:CMSInitiatingOccupancyFraction=70 -Xmx2048m -Xms1024m",
+      "HBASE_IDENT_STRING": "${USER}"
+    },
+    "files": [
+      {
+        "type": "TEMPLATE",
+        "dest_file": "log4j.properties",
+        "src_file": "/user/root/hbase-log4j.properties"
+      },
+      {
+        "type": "XML",
+        "dest_file": "core-site.xml",
+        "props": {
+          "fs.defaultFS": "${CLUSTER_FS_URI}"
+        }
+      },
+      {
+        "type": "XML",
+        "dest_file": "hbase-site.xml",
+        "props": {
+          "hbase.cluster.distributed": "true",
+          "hbase.zookeeper.quorum": "${CLUSTER_ZK_QUORUM}",
+          "hbase.rootdir": "${SERVICE_HDFS_DIR}/hbase",
+          "zookeeper.znode.parent": "${SERVICE_ZK_PATH}",
+          "hbase.master.hostname": "y7001.yns.example.com",
+          "hbase.master.info.port": "16010"
+        }
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "hbasemaster",
+      "number_of_containers": 1,
+      "launch_command": "lib/hbase/bin/hbase.distro master start",
+      "resource": {
+        "cpus": 1,
+        "memory": "4096"
+      }
+    },
+    {
+      "name": "regionserver",
+      "number_of_containers": 1,
+      "launch_command": "lib/hbase/bin/hbase.distro regionserver start",
+      "resource": {
+        "cpus": 1,
+        "memory": "2048"
+      },
+      "configuration": {
+        "files": [
+          {
+            "type": "XML",
+            "dest_file": "hbase-site.xml",
+            "props": {
+              "hbase.regionserver.hostname": "y7001.yns.example.com"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "quicklinks": {
+    "HBase Master Status UI": "http://y7001.yns.example.com:16010/master-status"
+  }
+}

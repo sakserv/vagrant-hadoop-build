@@ -1,0 +1,17 @@
+{
+  "name": "sleep-app-1", 
+  "version": "0.1",
+  "lifetime": "-1",
+  "components" : 
+    [
+      {
+        "name": "sleep",
+        "number_of_containers": 1,
+        "launch_command": "sleep 7200",
+        "resource": {
+          "cpus": 2, 
+          "memory": "256"
+        }
+      }
+    ]
+}

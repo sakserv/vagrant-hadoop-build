@@ -1,0 +1,27 @@
+{
+  "name": "test-centos7",
+  "version": "0.1",
+  "lifetime": "3600",
+  "components" :
+    [
+      {
+        "name": "centos7-nopid",
+        "number_of_containers": 1,
+	"run_privileged_container": true,
+        "artifact": {
+          "id": "library/centos:7",
+          "type": "DOCKER"
+        },
+        "configuration": {
+          "properties": {
+            "yarn.node.failure.threshold": "1"
+          }
+        },
+        "launch_command": "sleep 6000",
+        "resource": {
+          "cpus": 2,
+          "memory": "1024"
+        }
+      }
+    ]
+}

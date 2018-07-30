@@ -1,0 +1,55 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+require 'json'
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+# Profile search path:
+$profile_path = ["current.profile"]
+
+###############################################################################
+# Loads a profile, which is a JSON file describing a specific configuration.
+def loadProfile()
+  $profile_path.each { |file|
+    if file && File.file?(file)
+      puts "Loading profile %s\n" % [File.realpath(file)]
+      return JSON.parse( IO.read( file ), opts = { symbolize_names: true } )
+    end
+  }
+end
+
+profile = loadProfile()
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # All Vagrant configuration is done here. The most common configuration
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = profile[:box_name]
+
+  # Fixes changes from https://github.com/mitchellh/vagrant/pull/4707
+  config.ssh.insert_key = false
+
+  # The url from where the 'config.vm.box' box will be fetched if it
+  # doesn't already exist on the user's system.
+  if profile.key?(:box_url)
+    config.vm.box_url = profile[:box_url]
+  end
+
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--memory", profile[:vm_mem]] # RAM allocated to each VM
+    vb.customize ["modifyvm", :id, "--cpus", profile[:vm_cpus]] # CPU allocated to each VM
+    vb.customize ['modifyvm', :id, '--nicpromisc1', 'allow-all']
+  end
+
+  i = 0
+  profile[:nodes].each do |node|
+    config.vm.define node[:hostname] do |node_config|
+      hostname = node[:hostname] + "." + profile[:domain]
+      node_config.vm.hostname = hostname
+      node_config.vm.network :private_network, ip: node[:ip]
+      node_config.vm.synced_folder "~/.m2", "/root/.m2", type: "rsync"
+      node_config.vm.provision :shell, :path => "bootstrap.sh", args: [ "-s", profile[:secure]]
+      i += 1
+    end
+  end
+end
