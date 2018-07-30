@@ -40,7 +40,7 @@ Rebuild
 
 1. Sync the Hadoop source (and maven repo cache) to the VM
 ```
-vagrant rsync
+vagrant rsync # or vagrant rsync-auto
 ```
 
 2. Rebuild the VM. Two options are available. -s for secure and -w for wiping state. 
