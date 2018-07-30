@@ -40,7 +40,7 @@ if [ "$wipe" != "true" -a "$wipe" != "false" ]; then
   usage
 fi
 echo -e "\n##### Security Enabled: $secure"
-echo -e "\n##### Wipe Enabled: $secure"
+echo -e "\n##### Wipe Enabled: $wipe"
 
 #
 # Stop all services
