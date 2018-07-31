@@ -3,7 +3,7 @@
 #
 # Envs
 #
-MAVEN_VERSION=3.5.2
+MAVEN_VERSION=3.5.4
 
 #
 # Download maven if needed

@@ -3,7 +3,7 @@
 #
 # Env
 #
-ZOOKEEPER_VERSION=3.4.11
+ZOOKEEPER_VERSION=3.4.13
 
 #
 # Download zk tarball
