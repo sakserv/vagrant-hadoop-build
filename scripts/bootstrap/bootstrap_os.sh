@@ -30,4 +30,4 @@ echo -e "\n##### Installing EPEL Repo"
 yum install -y epel-release
 
 echo -e "\n##### Installing OS packages"
-yum install -y java-1.8.0-openjdk-devel nc git zlib-devel glibc-headers gcc-c++ openssl-devel net-tools links bind-utils jsvc jsoncpp protobuf-devel libgsasl-devel jq
+yum install -y java-1.8.0-openjdk-devel nc git zlib-devel glibc-headers gcc-c++ openssl-devel net-tools links bind-utils jsvc jsoncpp protobuf-devel libgsasl-devel jq wget
